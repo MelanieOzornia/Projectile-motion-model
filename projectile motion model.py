@@ -5,12 +5,18 @@ import math
 # Constants 
 ay = g = 9.81  # acceleration due to gravity (m/s^2)
 ax = 0  # horizontal acceleration (m/s^2) (assuming no air resistance)
-xi = 0  # initial vertical position (m)
-yi = 0  # initial horizontal position (m)
+dt = 0.01  # time step for calculations (s)
+
+# lists to store the results of the calculations
+x = {}  # horizontal position (m)
+y = {}  # vertical position (m)
+t= {}  # time (s)
 
 # User Inputs
 launchSpeed = float(input("Enter the launch speed (m/s): "))
 O = launchAngle = float(input("Enter the launch angle (degrees): "))
+xi = float(input("Enter the initial horizontal position (m): "))
+yi = float(input("Enter the initial vertical position (m): "))
 
 # inital velocity components
 vxi = launchSpeed * math.cos(math.radians(launchAngle))
@@ -28,6 +34,21 @@ vyf = vyi - (g * totalTime)  # final vertical velocity (m/s)
 
 # final velocity magnitude
 vf = math.sqrt(vxf ** 2 + vyf ** 2)  # final velocity magnitude (m/s)
+
+def main():
+    while y>= 0:
+        # update time
+        t[0] = 0
+        t[0] += dt
+
+        # update horizontal position
+        x[0] = xi + vxi * t[0]
+
+        # update vertical position
+        y[0] = yi + vyi * t[0] - 0.5 * g * t[0] ** 2
+
+        # print the results
+        print(f"Time: {t[0]:.2f} s, Horizontal Position: {x[0]:.2f} m, Vertical Position: {y[0]:.2f} m")
 
 
 # summary 
