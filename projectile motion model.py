@@ -57,7 +57,7 @@ def main():
 # 2. Maximum height
 # 3. Horizontal range
 # 4. Final velocity
-
+whatTime = float(input("what time would you like to see the results for? (in seconds): "))
 print("\nProjectile Motion Summary:")
 print(f"Time of Flight: {totalTime:.2f} seconds")
 print(f"Maximum Height: {maxHeight:.2f} meters")
