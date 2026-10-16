@@ -15,8 +15,13 @@ t= {}  # time (s)
 # User Inputs
 launchSpeed = float(input("Enter the launch speed (m/s): "))
 O = launchAngle = float(input("Enter the launch angle (degrees): "))
-xi = float(input("Enter the initial horizontal position (m): "))
-yi = float(input("Enter the initial vertical position (m): "))
+staringPosition = input("Does the projectile start form the origin? (yes/no): ")
+if staringPosition.lower() == "yes":
+    xi = 0
+    yi = 0
+else:
+    xi = float(input("Enter the initial horizontal position (m): "))
+    yi = float(input("Enter the initial vertical position (m): "))
 
 # inital velocity components
 vxi = launchSpeed * math.cos(math.radians(launchAngle))
