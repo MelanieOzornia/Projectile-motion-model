@@ -8,9 +8,9 @@ ax = 0  # horizontal acceleration (m/s^2) (assuming no air resistance)
 dt = 0.01  # time step for calculations (s)
 
 # lists to store the results of the calculations
-x = {}  # horizontal position (m)
-y = {}  # vertical position (m)
-t= {}  # time (s)
+x = []  # horizontal position (m)
+y = []  # vertical position (m)
+t= [0]  # time (s)
 
 # User Inputs
 launchSpeed = float(input("Enter the launch speed (m/s): "))
@@ -63,6 +63,11 @@ def main():
 # 3. Horizontal range
 # 4. Final velocity
 whatTime = float(input("what time would you like to see the results for? (in seconds): "))
+print(f"\nResults at {whatTime:.2f} seconds:")
+# calculate the horizontal and vertical positions at the specified time
+x_at_time = xi + vxi * whatTime
+y_at_time = yi + vyi * whatTime - 0.5 * g *whatTime ** 2
+print(f"Horizontal Position: {x_at_time:.2f} m, Vertical Position: {y_at_time:.2f} m")
 print("\nProjectile Motion Summary:")
 print(f"Time of Flight: {totalTime:.2f} seconds")
 print(f"Maximum Height: {maxHeight:.2f} meters")
