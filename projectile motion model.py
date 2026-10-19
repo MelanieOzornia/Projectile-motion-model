@@ -7,15 +7,12 @@ ay = g = 9.81  # acceleration due to gravity (m/s^2)
 ax = 0  # horizontal acceleration (m/s^2) (assuming no air resistance)
 dt = 0.01  # time step for calculations (s)
 
-# lists to store the results of the calculations
-x = []  # horizontal position (m)
-y = []  # vertical position (m)
-t= [0]  # time (s)
-
 # User Inputs
 launchSpeed = float(input("Enter the launch speed (m/s): "))
 O = launchAngle = float(input("Enter the launch angle (degrees): "))
 staringPosition = input("Does the projectile start form the origin? (yes/no): ")
+yEnd = float(input("Enter the final vertical position (m): "))
+
 if staringPosition.lower() == "yes":
     xi = 0
     yi = 0
@@ -27,34 +24,36 @@ else:
 vxi = launchSpeed * math.cos(math.radians(launchAngle))
 vyi = launchSpeed * math.sin(math.radians(launchAngle))
 
+# lists to store the results of the calculations
+x = [xi]  # horizontal position (m)
+y = [yi]  # vertical position (m)
+t = [0.0]  # time (s)
+vx = [vxi]  # horizontal velocity (m/s)
+vy = [vyi]  # vertical velocity (m/s)
+
 # Calculations
 totalTime = (2 * launchSpeed * math.sin(math.radians(launchAngle))) / g  # total time of flight (s)
 horizontalRange = xi + vxi * totalTime  # horizontal range (m)
 verticalDisplacement = yi + vyi * totalTime - 0.5 * g * totalTime ** 2  # vertical displacement (m)
 maxHeight = (vyi ** 2) / (2 * g)  # maximum height (m)
 
-# Final velocity components
-vxf = vxi  # final horizontal velocity (m/s)
-vyf = vyi - (g * totalTime)  # final vertical velocity (m/s)
+def record(time):
+    t.append(time)
+    x.append(xi + vxi * time)
+    y.append(yi + vyi * time - 0.5 * g * time ** 2)
+    vx.append(vxi)
+    vy.append(vyi - g * time)   
+    
+n = int(totalTime / dt)  # number of time steps
+for i in range(1, n + 1):
+    record(i * dt)
+    
+if t[-1] < totalTime:
+    record(totalTime)
 
-# final velocity magnitude
+vxf = vx[-1]  # final horizontal velocity (m/s)
+vyf = vy[-1]  # final vertical velocity (m/s)
 vf = math.sqrt(vxf ** 2 + vyf ** 2)  # final velocity magnitude (m/s)
-
-def main():
-    while y>= 0:
-        # update time
-        t[0] = 0
-        t[0] += dt
-
-        # update horizontal position
-        x[0] = xi + vxi * t[0]
-
-        # update vertical position
-        y[0] = yi + vyi * t[0] - 0.5 * g * t[0] ** 2
-
-        # print the results
-        print(f"Time: {t[0]:.2f} s, Horizontal Position: {x[0]:.2f} m, Vertical Position: {y[0]:.2f} m")
-
 
 # summary 
 # will include the following calculations:
