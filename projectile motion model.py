@@ -9,7 +9,7 @@ dt = 0.01  # time step for calculations (s)
 
 # User Inputs
 launchSpeed = float(input("Enter the launch speed (m/s): "))
-O = launchAngle = float(input("Enter the launch angle (degrees): "))
+launchAngle = float(input("Enter the launch angle (degrees): "))
 staringPosition = input("Does the projectile start form the origin? (yes/no): ")
 yEnd = float(input("Enter the final vertical position (m): "))
 
