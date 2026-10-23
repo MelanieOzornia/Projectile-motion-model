@@ -6,7 +6,6 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 # Constants 
 ay = g = 9.81  # acceleration due to gravity (m/s^2)
-ax = 0  # horizontal acceleration (m/s^2) (assuming no air resistance)
 dt = 0.01  # time step for calculations (s)
 
 # User Inputs
@@ -32,7 +31,6 @@ data = { "x": [xi], "y": [yi], "t": [0.0], "vx": [vxi], "vy": [vyi] }
 # Calculations
 totalTime = (2 * launchSpeed * math.sin(math.radians(launchAngle))) / g  # total time of flight (s)
 horizontalRange = xi + vxi * totalTime  # horizontal range (m)
-verticalDisplacement = yi + vyi * totalTime - 0.5 * g * totalTime ** 2  # vertical displacement (m)
 maxHeight = (vyi ** 2) / (2 * g)  # maximum height (m)
 
 def record(time):
@@ -54,11 +52,7 @@ vyf = data["vy"][-1]  # final vertical velocity (m/s)
 vf = math.sqrt(vxf ** 2 + vyf ** 2)  # final velocity magnitude (m/s)
 
 # summary 
-# will include the following calculations:
-# 1. Time of flight
-# 2. Maximum height
-# 3. Horizontal range
-# 4. Final velocity
+
 whatTime = float(input("what time would you like to see the results for? (in seconds): "))
 print(f"\nResults at {whatTime:.2f} seconds:")
 # calculate the horizontal and vertical positions at the specified time
@@ -71,13 +65,15 @@ print(f"Maximum Height: {maxHeight:.2f} meters")
 print(f"Horizontal Range: {horizontalRange:.2f} meters")
 print(f"Final Velocity: {vf:.2f} m/s at an angle of {math.degrees(math.atan2(vyf, vxf)):.2f} degrees")
 
+# Plotting the trajectory
+
 df = pd.DataFrame(data)
+plt.style.use('dark_background')
+sns.set_theme(palette="viridis")
 sns.scatterplot(data=df, x="x", y="y")
 plt.title("Projectile Motion Trajectory")
 plt.xlabel("Horizontal Position (m)")
 plt.ylabel("Vertical Position (m)")
 plt.xlim(0, horizontalRange * 1.1)
 plt.ylim(0, maxHeight * 1.1)
-plt.style.use('dark_background')
-sns.set_theme(palette="viridis")
 plt.show()
