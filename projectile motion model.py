@@ -29,9 +29,13 @@ vyi = launchSpeed * math.sin(math.radians(launchAngle))
 data = { "x": [xi], "y": [yi], "t": [0.0], "vx": [vxi], "vy": [vyi] }
 
 # Calculations
-totalTime = (2 * launchSpeed * math.sin(math.radians(launchAngle))) / g  # total time of flight (s)
-horizontalRange = xi + vxi * totalTime  # horizontal range (m)
-maxHeight = (vyi ** 2) / (2 * g)  # maximum height (m)
+disc = vyi ** 2 + 2 * g * (yi - yEnd)
+if disc < 0:
+    print("The projectile never reaches that height.")
+    raise SystemExit
+totalTime = (vyi + math.sqrt(disc)) / g
+horizontalRange = data["x"][-1]  # horizontal range (m)
+maxHeight = max(data["y"])   # maximum height (m)
 
 def record(time):
     data["t"].append(time)
@@ -54,7 +58,12 @@ vf = math.sqrt(vxf ** 2 + vyf ** 2)  # final velocity magnitude (m/s)
 # summary 
 
 whatTime = float(input("what time would you like to see the results for? (in seconds): "))
-print(f"\nResults at {whatTime:.2f} seconds:")
+i = round(whatTime / dt)
+if 0 <= i < len(data["t"]):
+    print(f"At time {data['t'][i]:.2f} seconds:")
+    print(f"Horizontal Position: {data['x'][i]:.2f} m, Vertical Position: {data['y'][i]:.2f} m")
+else:
+    print("Time is out of range. Please enter a time between 0 and {:.2f} seconds.".format(totalTime))
 # calculate the horizontal and vertical positions at the specified time
 x_at_time = xi + vxi * whatTime
 y_at_time = yi + vyi * whatTime - 0.5 * g *whatTime ** 2
@@ -68,9 +77,8 @@ print(f"Final Velocity: {vf:.2f} m/s at an angle of {math.degrees(math.atan2(vyf
 # Plotting the trajectory
 
 df = pd.DataFrame(data)
+sns.scatterplot(data=df, x="x", y="y", hue="t", palette="viridis")
 plt.style.use('dark_background')
-sns.set_theme(palette="viridis")
-sns.scatterplot(data=df, x="x", y="y")
 plt.title("Projectile Motion Trajectory")
 plt.xlabel("Horizontal Position (m)")
 plt.ylabel("Vertical Position (m)")
