@@ -34,8 +34,6 @@ if disc < 0:
     print("The projectile never reaches that height.")
     raise SystemExit
 totalTime = (vyi + math.sqrt(disc)) / g
-horizontalRange = data["x"][-1]  # horizontal range (m)
-maxHeight = max(data["y"])   # maximum height (m)
 
 def record(time):
     data["t"].append(time)
@@ -54,7 +52,8 @@ if data["t"][-1] < totalTime:
 vxf = data["vx"][-1]  # final horizontal velocity (m/s)
 vyf = data["vy"][-1]  # final vertical velocity (m/s)
 vf = math.sqrt(vxf ** 2 + vyf ** 2)  # final velocity magnitude (m/s)
-
+horizontalRange = data["x"][-1]  # horizontal range (m)
+maxHeight = max(data["y"])   # maximum height (m)
 # summary 
 
 whatTime = float(input("what time would you like to see the results for? (in seconds): "))
@@ -77,7 +76,7 @@ print(f"Final Velocity: {vf:.2f} m/s at an angle of {math.degrees(math.atan2(vyf
 # Plotting the trajectory
 
 df = pd.DataFrame(data)
-sns.scatterplot(data=df, x="x", y="y", hue="t", palette="viridis")
+sns.scatterplot(data=df, x="x", y="y", palette="viridis")
 plt.style.use('dark_background')
 plt.title("Projectile Motion Trajectory")
 plt.xlabel("Horizontal Position (m)")
