@@ -12,7 +12,16 @@ dt = 0.01  # time step for calculations (s)
 launchSpeed = float(input("Enter the launch speed (m/s): "))
 launchAngle = float(input("Enter the launch angle (degrees): "))
 staringPosition = input("Does the projectile start form the origin? (yes/no): ")
-yEnd = float(input("Enter the final vertical position (m): "))
+
+# giving the user the option to specify the final vertical position out of the range of the projectile
+maxHeight = (launchSpeed ** 2) * (math.sin(math.radians(launchAngle)) ** 2) / (2 * g)
+print(f"The maximum height of the projectile is: {maxHeight:.2f} meters.")
+while True:
+    yEnd = float(input("Enter the final vertical position (m): "))
+    if 0 <= yEnd <= maxHeight:
+        break
+    else:
+        print(f"Please enter a value between 0 and {maxHeight:.2f} meters.")
 
 if staringPosition.lower() == "yes":
     xi = 0
@@ -54,7 +63,8 @@ vyf = data["vy"][-1]  # final vertical velocity (m/s)
 vf = math.sqrt(vxf ** 2 + vyf ** 2)  # final velocity magnitude (m/s)
 horizontalRange = data["x"][-1]  # horizontal range (m)
 maxHeight = max(data["y"])   # maximum height (m)
-# summary 
+
+# asks the user for a specific time to see the results for
 
 whatTime = float(input("what time would you like to see the results for? (in seconds): "))
 i = round(whatTime / dt)
@@ -63,10 +73,9 @@ if 0 <= i < len(data["t"]):
     print(f"Horizontal Position: {data['x'][i]:.2f} m, Vertical Position: {data['y'][i]:.2f} m")
 else:
     print("Time is out of range. Please enter a time between 0 and {:.2f} seconds.".format(totalTime))
-# calculate the horizontal and vertical positions at the specified time
-x_at_time = xi + vxi * whatTime
-y_at_time = yi + vyi * whatTime - 0.5 * g *whatTime ** 2
-print(f"Horizontal Position: {x_at_time:.2f} m, Vertical Position: {y_at_time:.2f} m")
+
+# summary printout
+
 print("\nProjectile Motion Summary:")
 print(f"Time of Flight: {totalTime:.2f} seconds")
 print(f"Maximum Height: {maxHeight:.2f} meters")
@@ -76,8 +85,8 @@ print(f"Final Velocity: {vf:.2f} m/s at an angle of {math.degrees(math.atan2(vyf
 # Plotting the trajectory
 
 df = pd.DataFrame(data)
-sns.scatterplot(data=df, x="x", y="y", palette="viridis")
 plt.style.use('dark_background')
+sns.scatterplot(data=df, x="x", y="y", palette="viridis")
 plt.title("Projectile Motion Trajectory")
 plt.xlabel("Horizontal Position (m)")
 plt.ylabel("Vertical Position (m)")
