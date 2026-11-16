@@ -5,13 +5,13 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 # Constants 
-ay = g = 9.81  # acceleration due to gravity (m/s^2)
+g = 9.81  # acceleration due to gravity (m/s^2)
 dt = 0.01  # time step for calculations (s)
 
 # User Inputs
 launchSpeed = float(input("Enter the launch speed (m/s): "))
 launchAngle = float(input("Enter the launch angle (degrees): "))
-staringPosition = input("Does the projectile start form the origin? (yes/no): ")
+startingPosition = input("Does the projectile start from the origin? (yes/no): ")
 
 # giving the user the option to specify the final vertical position out of the range of the projectile
 maxHeight = (launchSpeed ** 2) * (math.sin(math.radians(launchAngle)) ** 2) / (2 * g)
@@ -23,7 +23,7 @@ while True:
     else:
         print(f"Please enter a value between 0 and {maxHeight:.2f} meters.")
 
-if staringPosition.lower() == "yes":
+if startingPosition.lower() == "yes":
     xi = 0
     yi = 0
 else:
@@ -67,10 +67,10 @@ maxHeight = max(data["y"])   # maximum height (m)
 # asks the user for a specific time to see the results for
 
 whatTime = float(input("what time would you like to see the results for? (in seconds): "))
-i = round(whatTime / dt)
-if 0 <= i < len(data["t"]):
-    print(f"At time {data['t'][i]:.2f} seconds:")
-    print(f"Horizontal Position: {data['x'][i]:.2f} m, Vertical Position: {data['y'][i]:.2f} m")
+lookUp = round(whatTime / dt)
+if 0 <= lookUp < len(data["t"]):
+    print(f"At time {data['t'][lookUp]:.2f} seconds:")
+    print(f"Horizontal Position: {data['x'][lookUp]:.2f} m, Vertical Position: {data['y'][lookUp]:.2f} m")
 else:
     print("Time is out of range. Please enter a time between 0 and {:.2f} seconds.".format(totalTime))
 
