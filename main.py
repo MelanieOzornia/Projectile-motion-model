@@ -3,6 +3,7 @@
 import math
 import pandas as pd
 import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
 import seaborn as sns
 # Constants 
 g = 9.81  # acceleration due to gravity (m/s^2)
@@ -85,11 +86,22 @@ print(f"Final Velocity: {vf:.2f} m/s at an angle of {math.degrees(math.atan2(vyf
 # Plotting the trajectory
 
 df = pd.DataFrame(data)
+
 plt.style.use('dark_background')
+fig, ax = plt.subplots()
+
 sns.scatterplot(data=df, x="x", y="y", hue="t", palette="viridis")
 plt.title("Projectile Motion Trajectory")
 plt.xlabel("Horizontal Position (m)")
 plt.ylabel("Vertical Position (m)")
 plt.xlim(0, horizontalRange * 1.1)
 plt.ylim(0, maxHeight * 1.1)
+
+projectile, = ax.plot([], [],'o', color='white', markersize=8)
+def update(frame):
+    projectile.set_data([df["x"].iloc[frame]], [df["y"].iloc[frame]])
+    return projectile,
+
+step = 2
+ani = FuncAnimation(fig=fig, func=update, frames=len(data["t"]), interval=dt*1000*step, blit=True)
 plt.show()
