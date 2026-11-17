@@ -65,7 +65,7 @@ Inputs: 50 m/s, 50°, start at origin, final height 0, lookup at 0.5 s
 
 
 ## Limitations:
-- ideal motion (no air resistance, g= 9.81
+- ideal motion (no air resistance, g= 9.81)
 - final height assumes launch starts from ground level
   
 ## Planned Features:
