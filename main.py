@@ -86,7 +86,7 @@ print(f"Final Velocity: {vf:.2f} m/s at an angle of {math.degrees(math.atan2(vyf
 
 df = pd.DataFrame(data)
 plt.style.use('dark_background')
-sns.scatterplot(data=df, x="x", y="y", palette="viridis")
+sns.scatterplot(data=df, x="x", y="y", hue="t", palette="viridis")
 plt.title("Projectile Motion Trajectory")
 plt.xlabel("Horizontal Position (m)")
 plt.ylabel("Vertical Position (m)")
