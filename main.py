@@ -30,7 +30,6 @@ while True:
     print("k can't be negative.")         
     print("Please enter a valid value.")
     
-# giving the user the option to specify the final vertical position out of the range of the projectile
 # inital velocity components (moved up from below)
 vxi = launchSpeed * math.cos(math.radians(launchAngle))
 vyi = launchSpeed * math.sin(math.radians(launchAngle))
@@ -44,8 +43,12 @@ while pvy > 0:
     pvy += (-g - dragK * speed * pvy) * dt
     py += pvy * dt
     maxHeight = max(maxHeight, py)
-
-print(f"The maximum height of the projectile is: {maxHeight:.2f} meters.")
+while True: # giving the user the option to specify the final vertical position out of the range of the projectile
+    yEnd = float(input("Enter the final vertical position (m): "))
+    if 0 <= yEnd <= maxHeight:
+        break
+    else:
+        print(f"Please enter a value between 0 and {maxHeight:.2f} meters.")
 
 # inital velocity components
 vxi = launchSpeed * math.cos(math.radians(launchAngle))
